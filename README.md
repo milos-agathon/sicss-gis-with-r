@@ -26,3 +26,7 @@ Apart from the Stamen layer, we also add GADM administrative level 1 boundary of
 
 ![alt text](https://github.com/milos-agathon/sicss-gis-with-r/blob/main/plot/map-4.png?raw=true)
 
+We use spatial join from `sf` library to find the admin level 1 of every fatality data point and calculate the share of fatalities in total 2022 fatalities for every region.
+We print the region name and share using `geom_sf_label` function in `ggplot2`.
+
+![alt text](https://github.com/milos-agathon/sicss-gis-with-r/blob/main/plot/map-5.png?raw=true)
