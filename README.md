@@ -6,6 +6,12 @@ The UCDP Georeferenced Event Dataset (GED) Global version 23.1 is a highly detai
 
 The repository includes code examples that demonstrate how to work with spatial data, perform geospatial analysis, and create compelling visual representations using R. It covers topics such as data acquisition, data preprocessing, spatial analysis techniques, and visualization methods.
 
+## Examples
+
+This is a basic bubble map of civilian deaths overlayed with GADM administrative level 1 boundary of Ukraine
+
+![alt text](https://github.com/milos-agathon/sicss-gis-with-r/blob/main/plot/map-0.png?raw=true)
+
 In this bubble map, we show civilian deaths in Ukraine against a Stamen terrain layer
 
 ![alt text](https://github.com/milos-agathon/sicss-gis-with-r/blob/main/plot/map-1.png?raw=true)
