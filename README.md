@@ -12,6 +12,10 @@ This is a basic bubble map of civilian deaths overlayed with GADM administrative
 
 ![alt text](https://github.com/milos-agathon/sicss-gis-with-r/blob/main/plot/map0.png?raw=true)
 
+We add major cities in the map below.
+
+![alt text](https://github.com/milos-agathon/sicss-gis-with-r/blob/main/plot/map2.png?raw=true)
+
 In this bubble map, we show civilian deaths in Ukraine against a Stamen terrain layer.
 We also colored only point edges to create more visibility.
 
