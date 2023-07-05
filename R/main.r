@@ -150,7 +150,11 @@ p1 <- ggplot(data = subset(
         name = "",
         range = c(1, 10)
     ) +
-    theme_for_the_win()
+    theme_for_the_win() +
+labs(
+        title = "Civilian deaths in Ukraine in 2022",
+        caption = "Data: UCDP Georeferenced Event Dataset (GED) Global version 23.1"
+    )
 
 ggsave(
     "ukraine_civilian_deaths0.png", p1,
