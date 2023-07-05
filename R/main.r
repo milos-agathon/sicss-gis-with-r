@@ -146,7 +146,7 @@ ukraine_layer <- ggmap::get_stamenmap(
     maptype = "terrain"
 )
 
-ggmap(ukraine_layer) +
+p2 <- ggmap(ukraine_layer) +
     geom_point(
         data = subset(
             ucdp_ged_ukraine,
@@ -157,20 +157,48 @@ ggmap(ukraine_layer) +
             y = latitude,
             size = deaths_civilians
         ),
-        color = "deeppink",
-        inherit.aes = F
-    ) +
-    geom_sf(
-        data = ukraine_adm1,
-        fill = "transparent",
-        color = "grey20",
-        size = .25,
+        color = "darkviolet",
+        alpha = .75,
+        shape = 21,
         inherit.aes = F
     ) +
     scale_size(
-        range = c(1, 15)
+        name = "Civilian deaths",
+        range = c(1, 10)
     ) +
-    theme_void()
+    theme_void() +
+    theme(
+        legend.position = "right",
+        legend.text = element_text(
+            size = 11, color = "grey10"
+        ),
+        legend.title = element_text(
+            size = 12, color = "grey10"
+        ),
+        legend.key = element_blank(),
+        plot.margin = unit(
+            c(t = -5, r = 2, b = -5, l = .1),
+            "lines"
+        ),
+        plot.title = element_text(
+            face = "bold", size = 18,
+            color = "darkviolet", hjust = .5
+        ),
+        plot.caption = element_text(
+            size = 10, color = "grey30",
+            hjust = .5, vjust = 0
+        )
+    ) +
+    labs(
+        title = "Civilian deaths in Ukraine in 2022",
+        caption = "Data: UCDP Georeferenced Event Dataset (GED) Global version 23.1"
+    )
+
+    ggsave(
+        "ukraine_civilian_deaths1.png", p2,
+        width = 9, height = 6,
+        units = "in", bg = "white"
+    )
 
 # 3. MONTHLY ANALYSIS
 #--------------------
