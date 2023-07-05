@@ -17,3 +17,7 @@ We also colored only point edges to create more visibility.
 
 ![alt text](https://github.com/milos-agathon/sicss-gis-with-r/blob/main/plot/map-1.png?raw=true)
 
+We leverage `facet_wrap` option in `ggplot2` to dive into the monthly trends in violence in the bubble map below 
+
+![alt text](https://github.com/milos-agathon/sicss-gis-with-r/blob/main/plot/map-2.png?raw=true)
+
