@@ -238,7 +238,7 @@ p2 <- ggmap(ukraine_layer) +
 # 3. MONTHLY ANALYSIS
 #--------------------
 
-ggmap(ukraine_layer) +
+p3 <- ggmap(ukraine_layer) +
     geom_point(
         data = subset(
             ucdp_ged_ukraine,
@@ -249,21 +249,29 @@ ggmap(ukraine_layer) +
             y = latitude,
             size = deaths_civilians
         ),
-        color = "deeppink",
-        inherit.aes = F
-    ) +
-    geom_sf(
-        data = ukraine_adm1,
-        fill = "transparent",
-        color = "grey20",
-        size = .25,
+        color = "darkviolet",
+        alpha = .75,
+        shape = 21,
         inherit.aes = F
     ) +
     scale_size(
-        range = c(1, 15)
+        range = c(1, 10)
+    ) +
+    guides(
+        size = "none"
     ) +
     facet_wrap(~month_year) +
-    theme_void()
+    theme_for_the_win() +
+    labs(
+        title = "Civilian deaths in Ukraine in 2022",
+        caption = "Data: UCDP Georeferenced Event Dataset (GED) Global version 23.1"
+    )
+
+ggsave(
+    "ukraine_civilian_deaths2.png", p3,
+    width = 9, height = 6,
+    units = "in", bg = "white"
+)
 
 # 4. LABELS
 #----------
