@@ -12,7 +12,7 @@ This is a basic bubble map of civilian deaths overlayed with GADM administrative
 
 ![alt text](https://github.com/milos-agathon/sicss-gis-with-r/blob/main/plot/map0.png?raw=true)
 
-We add major cities in the map below.
+We add major cities with the help of the world cities dataset from `maps` and `ggrepel` for text annotation in the map below.
 
 ![alt text](https://github.com/milos-agathon/sicss-gis-with-r/blob/main/plot/map2.png?raw=true)
 
