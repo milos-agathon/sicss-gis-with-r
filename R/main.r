@@ -254,6 +254,13 @@ p3 <- ggmap(ukraine_layer) +
         shape = 21,
         inherit.aes = F
     ) +
+    geom_sf(
+        data = ukraine_adm1,
+        fill = "transparent",
+        color = "grey10",
+        size = .15,
+        inherit.aes = F
+    ) +
     scale_size(
         range = c(1, 10)
     ) +
@@ -266,6 +273,7 @@ p3 <- ggmap(ukraine_layer) +
         title = "Civilian deaths in Ukraine in 2022",
         caption = "Data: UCDP Georeferenced Event Dataset (GED) Global version 23.1"
     )
+
 
 ggsave(
     "ukraine_civilian_deaths2.png", p3,
