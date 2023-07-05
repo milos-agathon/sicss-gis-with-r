@@ -329,7 +329,6 @@ ggsave(
     units = "in", bg = "white"
 )
 
-
 # 5. SPATIAL JOIN
 #----------------
 ucdp_ged_ukraine_sf <- ucdp_ged_ukraine |>
@@ -372,6 +371,14 @@ ucdp_ged_ukraine_agg_sf <- sf::st_join(
         ukraine_adm1,
         by = "GID_1"
     ) |>
+    dplyr::mutate(
+        perc_violence =
+            dplyr::if_else(
+                is.na(perc_violence),
+                0,
+                perc_violence
+            )
+    ) |>
     sf::st_as_sf()
 
 # plot
@@ -387,13 +394,17 @@ breaks <- seq(
     by = 10
 )
 
-ggmap(ukraine_layer) +
+p5 <- ggmap(ukraine_layer) +
     geom_sf(
-        data = ucdp_ged_ukraine_agg_sf,
+        data = subset(
+            ucdp_ged_ukraine_agg_sf,
+            NAME_1 != "?"
+        ),
         aes(
             fill = perc_violence
         ),
         color = "grey10",
+        size = .15,
         inherit.aes = F
     ) +
     scale_fill_gradientn(
@@ -404,4 +415,42 @@ ggmap(ukraine_layer) +
         )),
         breaks = round(breaks, 0)
     ) +
-    theme_void()
+    geom_sf_label(
+        data = subset(
+            ucdp_ged_ukraine_agg_sf,
+            !NAME_1 %in% c("?", "Kiev")
+        ),
+        aes(label = paste0(
+            NAME_1, ":", "", round(perc_violence, 1), "%"
+        )),
+        color = "grey10",
+        size = 2,
+        alpha = .99,
+        inherit.aes = F
+    ) +
+    geom_sf_label(
+        data = subset(
+            ucdp_ged_ukraine_agg_sf,
+            NAME_1 == "Kiev"
+        ),
+        aes(label = paste0(
+            NAME_1, ":", "", round(perc_violence, 1), "%"
+        )),
+        color = "grey10",
+        size = 2,
+        alpha = .99,
+        nudge_y = -.2,
+        inherit.aes = F
+    ) +
+    theme_for_the_win() +
+    labs(
+        title = "Civilian deaths in Ukraine in 2022",
+        caption = "Data: UCDP Georeferenced Event Dataset (GED) Global version 23.1"
+    )
+
+ggsave(
+    "ukraine_civilian_deaths5.png", p5,
+    width = 9, height = 6,
+    units = "in", bg = "white"
+)
+
