@@ -151,18 +151,84 @@ p1 <- ggplot(data = subset(
         range = c(1, 10)
     ) +
     theme_for_the_win() +
-labs(
+    labs(
         title = "Civilian deaths in Ukraine in 2022",
         caption = "Data: UCDP Georeferenced Event Dataset (GED) Global version 23.1"
     )
 
 ggsave(
-    "ukraine_civilian_deaths0.png", p1,
+    "ukraine_civilian_deaths1.png", p1,
     width = 9, height = 6,
     units = "in", bg = "white"
 )
 
-# 2. STREET LAYER
+# 2. LABELS
+#----------
+
+data(world.cities)
+ukraine_cities <- world.cities |>
+    dplyr::filter(
+        country.etc == "Ukraine"
+    ) |>
+    dplyr::slice_max(pop, n = 15)
+
+
+p2 <- ggplot(data = subset(
+    ucdp_ged_ukraine, deaths_civilians != 0
+)) +
+    geom_point(
+        aes(
+            x = longitude,
+            y = latitude,
+            size = deaths_civilians
+        ),
+        color = "darkviolet",
+        alpha = .75,
+        shape = 21
+    ) +
+    geom_sf(
+        data = ukraine_adm1,
+        fill = "transparent",
+        color = "grey10",
+        size = .15
+    ) +
+    ggrepel::geom_text_repel(
+        data = ukraine_cities,
+        aes(x = long, y = lat, label = name),
+        size = 3,
+        color = "grey10",
+        segment.size = .25,
+        nudge_y = -.75,
+        direction = "x",
+        force = 5,
+        segment.curvature = .6
+    ) +
+    geom_point(
+        data = ukraine_cities,
+        aes(
+            x = long,
+            y = lat
+        ),
+        size = 1,
+        color = "black"
+    ) +
+    scale_size(
+        name = "",
+        range = c(1, 10)
+    ) +
+    theme_for_the_win() +
+    labs(
+        title = "Civilian deaths in Ukraine in 2022",
+        caption = "Data: UCDP Georeferenced Event Dataset (GED) Global version 23.1"
+    )
+
+ggsave(
+    "ukraine_civilian_deaths2.png", p2,
+    width = 9, height = 6,
+    units = "in", bg = "white"
+)
+
+# 3. STREET LAYER
 #---------------------
 
 # Ukraine
@@ -185,7 +251,7 @@ ukraine_layer <- ggmap::get_stamenmap(
     maptype = "terrain"
 )
 
-p2 <- ggmap(ukraine_layer) +
+p3 <- ggmap(ukraine_layer) +
     geom_point(
         data = subset(
             ucdp_ged_ukraine,
@@ -205,44 +271,22 @@ p2 <- ggmap(ukraine_layer) +
         name = "Civilian deaths",
         range = c(1, 10)
     ) +
-    theme_void() +
-    theme(
-        legend.position = "right",
-        legend.text = element_text(
-            size = 11, color = "grey10"
-        ),
-        legend.title = element_text(
-            size = 12, color = "grey10"
-        ),
-        legend.key = element_blank(),
-        plot.margin = unit(
-            c(t = -5, r = 2, b = -5, l = .1),
-            "lines"
-        ),
-        plot.title = element_text(
-            face = "bold", size = 18,
-            color = "darkviolet", hjust = .5
-        ),
-        plot.caption = element_text(
-            size = 10, color = "grey30",
-            hjust = .5, vjust = 0
-        )
-    ) +
+    theme_for_the_win() +
     labs(
         title = "Civilian deaths in Ukraine in 2022",
         caption = "Data: UCDP Georeferenced Event Dataset (GED) Global version 23.1"
     )
 
-    ggsave(
-        "ukraine_civilian_deaths1.png", p2,
-        width = 9, height = 6,
-        units = "in", bg = "white"
-    )
+ggsave(
+    "ukraine_civilian_deaths3.png", p3,
+    width = 9, height = 6,
+    units = "in", bg = "white"
+)
 
-# 3. MONTHLY ANALYSIS
+# 4. MONTHLY ANALYSIS
 #--------------------
 
-p3 <- ggmap(ukraine_layer) +
+p4 <- ggmap(ukraine_layer) +
     geom_point(
         data = subset(
             ucdp_ged_ukraine,
@@ -280,51 +324,10 @@ p3 <- ggmap(ukraine_layer) +
 
 
 ggsave(
-    "ukraine_civilian_deaths2.png", p3,
+    "ukraine_civilian_deaths4.png", p4,
     width = 9, height = 6,
     units = "in", bg = "white"
 )
-
-# 4. LABELS
-#----------
-
-data(world.cities)
-ukraine_cities <- world.cities |>
-    dplyr::filter(
-        country.etc == "Ukraine"
-    ) |>
-    dplyr::slice_max(pop, n = 15)
-
-
-ggplot(data = subset(
-    ucdp_ged_ukraine, deaths_civilians != 0
-)) +
-    geom_point(
-        aes(
-            x = longitude,
-            y = latitude,
-            size = deaths_civilians
-        ),
-        color = "deeppink"
-    ) +
-    geom_sf(
-        data = ukraine_adm1,
-        fill = "transparent",
-        color = "black"
-    ) +
-    ggrepel::geom_label_repel(
-        data = ukraine_cities,
-        aes(x = long, y = lat, label = name),
-        color = "darkblue",
-        segment.size = .25,
-        label.size = 1,
-        force = .75,
-        segment.curvature = -.3
-    ) +
-    scale_size(
-        range = c(1, 15)
-    ) +
-    theme_void()
 
 
 # 5. SPATIAL JOIN
