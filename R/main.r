@@ -408,7 +408,7 @@ p5 <- ggmap(ukraine_layer) +
         inherit.aes = F
     ) +
     scale_fill_gradientn(
-        name = "",
+        name = "%-share",
         colours = rev(hcl.colors(
             20, "Plasma",
             alpha = .8
