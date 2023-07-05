@@ -20,5 +20,5 @@ We also colored only point edges to create more visibility.
 We leverage `facet_wrap` option in `ggplot2` to dive into the monthly trends in violence in the bubble map below.
 Apart from the Stamen layer, we also add GADM administrative level 1 boundary of Ukraine for greater visibility.
 
-![alt text](https://github.com/milos-agathon/sicss-gis-with-r/blob/main/plot/map-2.png?raw=true)
+![alt text](https://github.com/milos-agathon/sicss-gis-with-r/blob/main/plot/map-4.png?raw=true)
 
