@@ -82,6 +82,33 @@ summary(ucdp_ged_ukraine$time)
 nrow(ucdp_ged_ukraine)
 names(ucdp_ged_ukraine)
 
+# ggplot2 theme
+theme_for_the_win <- function() {
+    theme_void() +
+        theme(
+            legend.position = "right",
+            legend.text = element_text(
+                size = 11, color = "grey10"
+            ),
+            legend.title = element_text(
+                size = 12, color = "grey10"
+            ),
+            legend.key = element_blank(),
+            plot.margin = unit(
+                c(t = -5, r = 2, b = -5, l = .1),
+                "lines"
+            ),
+            plot.title = element_text(
+                face = "bold", size = 18,
+                color = "darkviolet", hjust = .5
+            ),
+            plot.caption = element_text(
+                size = 10, color = "grey30",
+                hjust = .5, vjust = 0
+            )
+        )
+}
+
 # simple plot
 ggplot(data = ucdp_ged_ukraine) +
     geom_point(
@@ -91,7 +118,7 @@ ggplot(data = ucdp_ged_ukraine) +
             size = deaths_civilians
         )
     ) +
-    theme_void()
+    theme_for_the_win()
 
 # admin level 1 Ukraine
 ukraine_adm1 <- geodata::gadm(
@@ -102,7 +129,7 @@ ukraine_adm1 <- geodata::gadm(
     sf::st_as_sf()
 
 # adding Ukraine level 1 admin
-ggplot(data = subset(
+p1 <- ggplot(data = subset(
     ucdp_ged_ukraine, deaths_civilians != 0
 )) +
     geom_point(
@@ -111,17 +138,25 @@ ggplot(data = subset(
             y = latitude,
             size = deaths_civilians
         ),
-        color = "deeppink"
+        color = "darkviolet"
     ) +
     geom_sf(
         data = ukraine_adm1,
         fill = "transparent",
-        color = "black"
+        color = "black",
+        size = .15
     ) +
     scale_size(
-        range = c(1, 15)
+        name = "",
+        range = c(1, 10)
     ) +
-    theme_void()
+    theme_for_the_win()
+
+ggsave(
+    "ukraine_civilian_deaths0.png", p1,
+    width = 9, height = 6,
+    units = "in", bg = "white"
+)
 
 # 2. STREET LAYER
 #---------------------
